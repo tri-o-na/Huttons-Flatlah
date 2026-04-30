@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Property {
+  id                   Int      @id @default(autoincrement())
+  month                DateTime
+  town                 String
+  flat_type            String
+  block                String
+  street_name          String
+  storey_range         String
+  floor_area_sqm       Float
+  flat_model           String
+  lease_commence_date  Int
+  remaining_lease      String
+  resale_price         Int
+  psf                  Float
+
+  @@map("properties")
+}
