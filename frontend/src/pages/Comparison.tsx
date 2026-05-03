@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE } from '../utils/api';
 import {
   ResponsiveContainer,
   LineChart,
@@ -69,7 +70,7 @@ const Comparison = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3002/api/towns')
+      .get(`${API_BASE}/api/towns`)
       .then((r) => setTownOptions(r.data))
       .catch(console.error);
   }, []);
@@ -98,7 +99,7 @@ const Comparison = () => {
     if (selectedTowns.length === 0) return;
     setLoading(true);
     try {
-      const r = await axios.post('http://localhost:3002/api/comparison', { towns: selectedTowns });
+      const r = await axios.post(`${API_BASE}/api/comparison`, { towns: selectedTowns });
       setComparisonData(r.data);
     } catch (e) {
       console.error('Comparison failed:', e);

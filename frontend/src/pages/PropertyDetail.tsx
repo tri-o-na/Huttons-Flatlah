@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo, useCallback } from 'react';
 
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE } from '../utils/api';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import {
@@ -535,7 +536,7 @@ const PropertyDetail = () => {
     const fetch = async () => {
       try {
         const r = await axios.get(
-          `http://localhost:3002/api/properties/${params.town}/${params.street}/${params.block}`
+          `${API_BASE}/api/properties/${params.town}/${params.street}/${params.block}`
         );
         setData(r.data);
         const address = `${r.data.header.block} ${r.data.header.street_name} Singapore`;
@@ -565,7 +566,7 @@ const PropertyDetail = () => {
     let cancelled = false;
     setLoadingAmenities(true);
     axios
-      .get('http://localhost:3002/api/amenities/nearby', {
+      .get(`${API_BASE}/api/amenities/nearby`, {
         params: { lat: coordinates[0], lng: coordinates[1], radius: 1500 },
       })
       .then((r) => { if (!cancelled) setAmenities(r.data); })

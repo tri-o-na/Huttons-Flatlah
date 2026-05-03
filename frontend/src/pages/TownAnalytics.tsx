@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE } from '../utils/api';
 import {
   BarChart,
   Bar,
@@ -76,7 +77,7 @@ const TownAnalytics = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3002/api/towns')
+      .get(`${API_BASE}/api/towns`)
       .then((r) => setTownOptions(r.data))
       .catch(console.error);
   }, []);
@@ -85,7 +86,7 @@ const TownAnalytics = () => {
     if (!selectedTown) return;
     setLoading(true);
     axios
-      .get(`http://localhost:3002/api/towns/${encodeURIComponent(selectedTown)}`)
+      .get(`${API_BASE}/api/towns/${encodeURIComponent(selectedTown)}`)
       .then((r) => setAnalytics(r.data))
       .catch(console.error)
       .finally(() => setLoading(false));

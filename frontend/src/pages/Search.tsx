@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { formatCurrency } from '../utils/format';
+import { API_BASE } from '../utils/api';
 import { buildPropertiesSearchParams } from '../utils/search';
 
 interface PropertyCard {
@@ -67,8 +68,8 @@ const Search = () => {
   }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:3002/api/towns').then((r) => setTownOptions(r.data)).catch(console.error);
-    axios.get('http://localhost:3002/api/properties/stats').then((r) => setPriceStats(r.data)).catch(console.error);
+    axios.get(`${API_BASE}/api/towns`).then((r) => setTownOptions(r.data)).catch(console.error);
+    axios.get(`${API_BASE}/api/properties/stats`).then((r) => setPriceStats(r.data)).catch(console.error);
   }, []);
 
   useEffect(() => {
@@ -88,7 +89,7 @@ const Search = () => {
     setLoading(true);
     const timer = setTimeout(() => {
       axios
-        .get(`http://localhost:3002/api/properties/search?${params}`, { signal: controller.signal })
+        .get(`${API_BASE}/api/properties/search?${params}`, { signal: controller.signal })
         .then((r) => {
           setProperties(r.data.data);
           setTotal(r.data.total);

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import L from 'leaflet';
 import 'leaflet.markercluster';
 import axios from 'axios';
+import { API_BASE } from '../utils/api';
 import { formatCurrency } from '../utils/format';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
@@ -269,7 +270,7 @@ function useOneMapSearch(query: string, minChars = 3) {
     const t = setTimeout(async () => {
       setLoading(true);
       try {
-        const r = await axios.get('http://localhost:3002/api/onemap/search', {
+        const r = await axios.get(`${API_BASE}/api/onemap/search`, {
           params: { query: query.trim() }
         });
         if (!cancelled) {
@@ -452,7 +453,7 @@ const Map = () => {
 
   // Load all listings on mount for clustering (fetch max allowed)
   useEffect(() => {
-    axios.get('http://localhost:3002/api/properties/search?limit=5000')
+    axios.get(`${API_BASE}/api/properties/search?limit=5000`)
       .then((r) => {
         setAllListings(r.data.data || []);
       })
@@ -460,7 +461,7 @@ const Map = () => {
   }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:3002/api/towns').then((r) => setTowns(r.data)).catch(console.error);
+    axios.get(`${API_BASE}/api/towns`).then((r) => setTowns(r.data)).catch(console.error);
   }, []);
 
   // Lazy geocode: only geocode listings in current viewport when zoomed in enough
@@ -502,7 +503,7 @@ const Map = () => {
             const key = getBlockKey(p);
             try {
               const query = `${p.block} ${p.street_name} ${p.town}`;
-              const r = await axios.get('http://localhost:3002/api/onemap/search', {
+              const r = await axios.get(`${API_BASE}/api/onemap/search`, {
                 params: { query }
               });
               const results = r.data?.results as Array<any> | undefined;
@@ -583,7 +584,7 @@ const Map = () => {
     setLoading(true);
     try {
       const r = await axios.get(
-        `http://localhost:3002/api/properties/search?town=${encodeURIComponent(town.town)}&sortBy=highest_price&limit=20`
+        `${API_BASE}/api/properties/search?town=${encodeURIComponent(town.town)}&sortBy=highest_price&limit=20`
       );
       setPropertyList(r.data.data || []);
       setTotalProperties(r.data.total || 0);
@@ -607,7 +608,7 @@ const Map = () => {
     
     try {
       const r = await axios.get(
-        `http://localhost:3002/api/properties/${encodeURIComponent(prop.town)}/${encodeURIComponent(prop.street_name)}/${encodeURIComponent(prop.block)}`
+        `${API_BASE}/api/properties/${encodeURIComponent(prop.town)}/${encodeURIComponent(prop.street_name)}/${encodeURIComponent(prop.block)}`
       );
       setPropertyDetail(r.data);
     } catch (e) { console.error(e); }
@@ -617,7 +618,7 @@ const Map = () => {
     if (coords) {
       setLoadingAmenities(true);
       try {
-        const r = await axios.get('http://localhost:3002/api/amenities/nearby', {
+        const r = await axios.get(`${API_BASE}/api/amenities/nearby`, {
           params: { lat: coords[0], lng: coords[1], radius: 1500 },
         });
         setNearbyAmenities(r.data);
