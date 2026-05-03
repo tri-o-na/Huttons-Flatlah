@@ -1102,7 +1102,7 @@ const Map = () => {
                                   tickFormatter={(v) => `S${(v/1000).toFixed(0)}k`}
                                 />
                                 <Tooltip 
-                                  formatter={(v: number) => formatCurrency(v)}
+                                  formatter={(v) => formatCurrency(Number(v))}
                                   labelStyle={{ fontSize: 12 }}
                                 />
                                 <Line 
