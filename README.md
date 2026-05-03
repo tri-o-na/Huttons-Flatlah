@@ -4,6 +4,17 @@ Singapore's HDB Resale Intelligence Platform. A full-stack web application for e
 
 > **Data coverage:** 229,000+ transactions · 26 towns · Jan 2017 – Apr 2026
 
+🔗 **Live demo:** [huttons-flatlah.netlify.app](https://huttons-flatlah.netlify.app)
+
+## Deployment
+
+| Service | Platform | URL |
+|---------|----------|-----|
+| Frontend | [Netlify](https://netlify.com) | https://huttons-flatlah.netlify.app |
+| Backend | [Render](https://render.com) | Free tier (cold starts ~30s after inactivity) |
+
+---
+
 ## Tech Stack
 
 - **Frontend**: React + TypeScript + Vite
@@ -132,7 +143,13 @@ Singapore's HDB Resale Intelligence Platform. A full-stack web application for e
    ```
    npm run dev
    ```
-   The app is available at http://localhost:5177
+   The app is available at http://localhost:5173
+
+4. Set the backend URL (optional — defaults to `http://localhost:3002`):
+   ```
+   cp .env.example .env
+   # Edit VITE_API_URL if needed
+   ```
 
 ---
 
