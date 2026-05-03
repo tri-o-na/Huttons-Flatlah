@@ -4,7 +4,7 @@
   "description": "Backend for HDB resale property app",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npx prisma generate",
     "start": "node dist/server.js",
     "dev": "ts-node src/server.ts",
     "seed": "ts-node prisma/seed.ts"
